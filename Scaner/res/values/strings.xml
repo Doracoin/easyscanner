@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">扫一扫</string>
+    <string name="result_tip">扫描到以下内容：</string>
+
+</resources>
