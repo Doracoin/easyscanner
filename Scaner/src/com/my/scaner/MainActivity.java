@@ -54,7 +54,7 @@ public class MainActivity extends Activity {
 	private Camera mCamera;
 	private Parameters cameraMeters;// 相机参数
 	private Size size;// 相机尺寸
-	private byte[] buff=new byte[3110400];
+	private byte[] buff = new byte[3110400];
 
 	private ImageView cancel, torch, share;
 	private RelativeLayout resultArea;
@@ -243,22 +243,25 @@ public class MainActivity extends Activity {
 		vibra.vibrate(100);
 		resultArea.setVisibility(View.VISIBLE);
 		barcodeResult.setText(result);
-		if ("http://".equals(result.substring(0, 7))) {
+		if (("http://".equals(result.substring(0, 7)) || ("https://"
+				.equals(result.substring(0, 8))))) {
 			barcodeResult.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
-			barcodeResult.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					try {
-						Intent intent = new Intent(Intent.ACTION_VIEW);
-						intent.setData(Uri.parse(result));
-						startActivity(intent);
-					} catch (Exception e) {
-						Log.e("" + e.getLocalizedMessage(), e.getMessage());
-					}
-				}
-			});
+			barcodeResult.setOnClickListener(browserListener);
 		}
 	}
+
+	private OnClickListener browserListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			try {
+				Intent intent = new Intent(Intent.ACTION_VIEW);
+				intent.setData(Uri.parse(result));
+				startActivity(intent);
+			} catch (Exception e) {
+				Log.e("" + e.getLocalizedMessage(), e.getMessage());
+			}
+		}
+	};
 
 	private boolean hasCamera() {
 		if (getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
