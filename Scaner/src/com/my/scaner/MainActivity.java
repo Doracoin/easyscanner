@@ -243,11 +243,23 @@ public class MainActivity extends Activity {
 		vibra.vibrate(100);
 		resultArea.setVisibility(View.VISIBLE);
 		barcodeResult.setText(result);
-		if (("http://".equals(result.substring(0, 7)) || ("https://"
-				.equals(result.substring(0, 8))))) {
+		if (matchType(result)) {
 			barcodeResult.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
 			barcodeResult.setOnClickListener(browserListener);
 		}
+	}
+
+	private boolean matchType(String s) {
+		if ("http://".equals(result.substring(0, 7))) {
+			return true;
+		}
+		if ("https://".equals(result.substring(0, 8))) {
+			return true;
+		}
+		if ("ftp://".equals(result.substring(0, 6))) {
+			return true;
+		}
+		return false;
 	}
 
 	private OnClickListener browserListener = new OnClickListener() {
